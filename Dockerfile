@@ -11,8 +11,8 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the application with EasyPanel configuration
+RUN npm run build:easypanel
 
 # Production stage
 FROM node:20-alpine
@@ -31,5 +31,8 @@ ENV NODE_ENV=production
 # Expose port
 EXPOSE 80
 
-# Start command (can be overridden in docker-compose)
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "80"]
+# Copy EasyPanel config to the root directory
+COPY --from=base /app/vite.config.easypanel.js ./vite.config.js
+
+# Start command with explicit configuration
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "80", "--config", "vite.config.js"]
