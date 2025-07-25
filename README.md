@@ -1,6 +1,14 @@
-# InstaFlow Automator - Instagram Automation Platform
+# InstaFlow Automator - Backend API
 
-A comprehensive Instagram automation web application that enables users to create visual workflows for automating DMs, comments, and messages through webhooks and a drag-and-drop flow builder.
+This is the backend component of the InstaFlow Automator Instagram automation platform. The project has been split into separate frontend and backend repositories for better organization and development workflow.
+
+## Branch Structure
+
+The InstaFlow project is now organized into separate branches:
+
+- `master` - Contains the full application (both frontend and backend)
+- `frontend` - Contains only the React + TypeScript frontend application
+- `backend` - Contains only the Node.js Express backend API (this branch)
 
 ## Features
 
