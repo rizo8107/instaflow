@@ -1,0 +1,35 @@
+{
+  "name": "instaflow",
+  "description": "Instagram Automation Platform with visual workflow builder",
+  "version": "1.0.0",
+  "repository": "https://github.com/rizo8107/instaflow.git",
+  "services": {
+    "frontend": {
+      "env": {
+        "VITE_META_APP_ID": "${META_APP_ID}",
+        "VITE_REDIRECT_URI": "${REDIRECT_URI}",
+        "VITE_API_BASE_URL": "${API_BASE_URL}"
+      },
+      "resources": {
+        "memory": "1024M",
+        "cpu": 1
+      }
+    },
+    "backend": {
+      "env": {
+        "META_APP_ID": "${META_APP_ID}",
+        "META_APP_SECRET": "${META_APP_SECRET}",
+        "REDIRECT_URI": "${REDIRECT_URI}"
+      },
+      "resources": {
+        "memory": "1024M",
+        "cpu": 1
+      }
+    }
+  },
+  "volumes": {
+    "data": {
+      "mountPath": "/app/data"
+    }
+  }
+}
