@@ -22,7 +22,7 @@ services:
     image: node:20-alpine
     restart: unless-stopped
     working_dir: /app
-    command: sh -c "npm install && node backend-server.js"
+    command: sh -c "npm install && node backend-server.mjs"
     volumes:
       - ./:/app
     ports:

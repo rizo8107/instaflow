@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 
+// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -271,6 +272,7 @@ async function replyToComment(commentId, message) {
   // Implementation would use Instagram Graph API
   console.log(`📤 Would reply to comment ${commentId}: ${message}`);
 }
+
 // Flow execution endpoint (for webhook triggers)
 app.post('/api/flows/execute', (req, res) => {
   const { eventType, eventData, timestamp } = req.body;

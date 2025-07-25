@@ -1,0 +1,48 @@
+name: Deploy to EasyPanel
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build frontend
+        run: npm run build
+      
+      - name: Deploy to EasyPanel
+        run: |
+          curl -X POST "${{ secrets.EASYPANEL_URL }}/api/projects/deploy" \
+          -H "Authorization: Bearer ${{ secrets.EASYPANEL_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "projectId": "instaflow",
+            "environmentVariables": {
+              "META_APP_ID": "${{ secrets.META_APP_ID }}",
+              "META_APP_SECRET": "${{ secrets.META_APP_SECRET }}",
+              "REDIRECT_URI": "${{ secrets.REDIRECT_URI }}",
+              "API_BASE_URL": "${{ secrets.API_BASE_URL }}"
+            }
+          }'
+      
+      - name: Verify deployment
+        run: |
+          echo "Deployment to EasyPanel initiated"
+          echo "Check EasyPanel dashboard for deployment status"
