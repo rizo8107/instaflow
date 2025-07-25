@@ -1,37 +1,21 @@
-FROM node:20-alpine as base
+FROM node:20-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json package-lock.json ./
+# Copy backend package.json and install dependencies
+COPY backend-package.json ./package.json
+RUN npm install
 
-# Install dependencies
-RUN npm ci
-
-# Copy source files
-COPY . .
-
-# Build frontend
-RUN npm run build
-
-# Production stage
-FROM node:20-alpine as production
-
-WORKDIR /app
-
-# Copy built files and dependencies
-COPY --from=base /app/dist ./dist
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/backend-server.mjs ./
-COPY --from=base /app/backend-package.json ./
+# Copy backend server file and other necessary files
+COPY backend-server.mjs ./
+COPY .env.easypanel ./.env
 
 # Set environment variables
 ENV NODE_ENV=production
 
-# Expose ports
+# Expose port
 EXPOSE 3001
-EXPOSE 80
 
-# Start command (can be overridden in docker-compose)
-CMD ["sh", "-c", "cp backend-package.json package.json && npm install && node backend-server.mjs"]
+# Start command
+CMD ["node", "backend-server.mjs"]
