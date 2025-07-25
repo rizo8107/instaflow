@@ -14,10 +14,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -37,16 +37,16 @@ jobs:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
           N8N_WEBHOOK_URL: ${{ secrets.N8N_WEBHOOK_URL }}
         run: |
-          curl -X POST "$EASYPANEL_URL/api/projects/deploy" \
-          -H "Authorization: Bearer $EASYPANEL_API_KEY" \
+          curl -X POST "${EASYPANEL_URL}/api/projects/deploy" \
+          -H "Authorization: Bearer ${EASYPANEL_API_KEY}" \
           -H "Content-Type: application/json" \
           -d '{
             "projectId": "instaflow-frontend",
             "environmentVariables": {
-              "VITE_META_APP_ID": "'$META_APP_ID'",
-              "VITE_REDIRECT_URI": "'$REDIRECT_URI'",
-              "VITE_API_BASE_URL": "'$API_BASE_URL'",
-              "VITE_N8N_WEBHOOK_URL": "'$N8N_WEBHOOK_URL'"
+              "VITE_META_APP_ID": "'"${META_APP_ID}"'",
+              "VITE_REDIRECT_URI": "'"${REDIRECT_URI}"'",
+              "VITE_API_BASE_URL": "'"${API_BASE_URL}"'",
+              "VITE_N8N_WEBHOOK_URL": "'"${N8N_WEBHOOK_URL}"'"
             }
           }'
       
