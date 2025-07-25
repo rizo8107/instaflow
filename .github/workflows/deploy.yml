@@ -13,10 +13,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -28,17 +28,24 @@ jobs:
         run: npm run build
       
       - name: Deploy to EasyPanel
+        env:
+          EASYPANEL_URL: ${{ secrets.EASYPANEL_URL }}
+          EASYPANEL_API_KEY: ${{ secrets.EASYPANEL_API_KEY }}
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: |
-          curl -X POST "${{ secrets.EASYPANEL_URL }}/api/projects/deploy" \
-          -H "Authorization: Bearer ${{ secrets.EASYPANEL_API_KEY }}" \
+          curl -X POST "${EASYPANEL_URL}/api/projects/deploy" \
+          -H "Authorization: Bearer ${EASYPANEL_API_KEY}" \
           -H "Content-Type: application/json" \
           -d '{
             "projectId": "instaflow",
             "environmentVariables": {
-              "META_APP_ID": "${{ secrets.META_APP_ID }}",
-              "META_APP_SECRET": "${{ secrets.META_APP_SECRET }}",
-              "REDIRECT_URI": "${{ secrets.REDIRECT_URI }}",
-              "API_BASE_URL": "${{ secrets.API_BASE_URL }}"
+              "META_APP_ID": "'${META_APP_ID}'",
+              "META_APP_SECRET": "'${META_APP_SECRET}'",
+              "REDIRECT_URI": "'${REDIRECT_URI}'",
+              "API_BASE_URL": "'${API_BASE_URL}'"
             }
           }'
       

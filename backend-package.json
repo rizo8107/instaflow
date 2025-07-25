@@ -2,10 +2,11 @@
   "name": "instaflow-backend",
   "version": "1.0.0",
   "description": "Backend server for InstaFlow Automator - Instagram automation platform",
-  "main": "server.js",
+  "main": "backend-server.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node backend-server.mjs",
+    "dev": "nodemon backend-server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

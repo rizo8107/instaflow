@@ -23,8 +23,8 @@ WORKDIR /app
 # Copy built files and dependencies
 COPY --from=base /app/dist ./dist
 COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/package.json ./
 COPY --from=base /app/backend-server.mjs ./
+COPY --from=base /app/backend-package.json ./
 
 # Set environment variables
 ENV NODE_ENV=production
@@ -34,4 +34,4 @@ EXPOSE 3001
 EXPOSE 80
 
 # Start command (can be overridden in docker-compose)
-CMD ["node", "backend-server.mjs"]
+CMD ["sh", "-c", "cp backend-package.json package.json && npm install && node backend-server.mjs"]
