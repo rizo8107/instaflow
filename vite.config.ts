@@ -7,4 +7,13 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    cors: true,
+  },
+  preview: {
+    allowedHosts: [
+      'konipai-instaflow.7za6uc.easypanel.host',
+      '*.easypanel.host', // Allow all easypanel subdomains
+    ],
+  },
 });
